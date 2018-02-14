@@ -1,0 +1,64 @@
+written by Daniel Kalam
+
+void BSTree::remove(string* key)
+{
+	Node* node = findNode(key, root);
+	if (node != nullptr)
+	{
+		size--;
+		if (node->Parent() == nullptr&&node->Right() == nullptr&&node->Left() == nullptr)
+		{
+			delete root; 
+			root = nullptr;
+		}
+		else
+		{
+			remove(node);
+		}
+	}
+}
+
+void BSTree::remove(Node* node)
+{
+	if (node->Left() == nullptr&&node->Right() == nullptr)
+	{
+		if (node->Parent()->Left() == node)
+			node->Parent()->setLeft(nullptr);
+		else if (node->Parent()->Right() == node)
+			node->Parent()->setRight(nullptr);
+		delete node;
+	}
+	else if (node->Left() != nullptr&&node->Right() != nullptr)
+	{
+		Node* replace = min(node->Right());
+		node->setData(replace->Data());
+		node->setKey(replace->Key());
+		remove(replace);
+	}
+	else if (node->Left() != nullptr)
+	{
+		Node* left = node->Left();
+		node->setData(left->Data());
+		node->setKey(left->Key());
+		node->setLeft(left->Left());
+		node->setRight(left->Right());
+		if (node->Right() != nullptr) 
+			node->Right()->setParent(node); 
+		if (node->Left() != nullptr) 
+			node->Left()->setParent(node); 
+		delete left;
+	}
+	else if (node->Right() != nullptr) 
+	{ 
+		Node* right = node->Right(); 
+		node->setData(right->Data()); 
+		node->setKey(right->Key()); 
+		node->setLeft(right->Left()); 
+		node->setRight(right->Right()); 
+		if (node->Right() != nullptr) 
+			node->Right()->setParent(node); 
+		if (node->Left() != nullptr) 
+			node->Left()->setParent(node); 
+		delete right; 
+	}
+}

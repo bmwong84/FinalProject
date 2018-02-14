@@ -1,0 +1,24 @@
+void sort(std::vector<Entry>& entries, int fieldIndex) {
+
+...
+
+if ( entries[i].name < entries[j].name )..
+	Entry& e1 = entries[i];
+	Entry& e2\ = entries[j];
+	
+if ( Entry::compare(e1, e2, fieldIndex) ) {
+
+}
+...
+
+
+Entry.h
+
+class Entry {
+
+	static bool compare(const Entry& e1, const Entry& e2, int i) {
+		switch ( i ) {
+			case 0: 
+		};
+	}
+};
